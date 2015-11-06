@@ -20,7 +20,7 @@ namespace :wpcli do
     namespace :rsync do
       desc "Push local uploads delta to remote machine"
       task :push do
-        on roles(:web) do
+        roles(:web).each do |role|
           run_locally do
             execute :rsync, fetch(:wpcli_rsync_options), fetch(:wpcli_local_uploads_dir), "#{role.user}@#{role.hostname}:#{fetch(:wpcli_remote_uploads_dir)}"
           end
@@ -29,7 +29,7 @@ namespace :wpcli do
 
       desc "Pull remote uploads delta to local machine"
       task :pull do
-        on roles(:web) do
+        roles(:web).each do |role|
           run_locally do
             execute :rsync, fetch(:wpcli_rsync_options), "#{role.user}@#{role.hostname}:#{fetch(:wpcli_remote_uploads_dir)}", fetch(:wpcli_local_uploads_dir)
           end

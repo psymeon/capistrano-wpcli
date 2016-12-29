@@ -3,7 +3,7 @@ namespace :load do
     # These options are passed directly to rsync
     # Append your options, overwriting the defaults may result in malfunction
     # Ex: --recursive --delete --exclude .git*
-    set :wpcli_rsync_options, %w[-avz --rsh=ssh --iconv=UTF-8-MAC,UTF-8]
+    set :wpcli_rsync_options, %w[-avz --rsh=ssh]
 
     # Local dir where WP stores the uploads
     # IMPORTANT: Add trailing slash!

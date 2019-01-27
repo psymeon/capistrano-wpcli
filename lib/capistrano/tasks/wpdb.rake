@@ -62,6 +62,9 @@ namespace :wpcli do
       on roles(:web) do
         upload! fetch(:wpcli_local_db_file), fetch(:wpcli_remote_db_file)
         within release_path do
+          if fetch(:stage) == :staging
+            execute :wp, :db, :export
+          end
           execute :gunzip, "<", fetch(:wpcli_remote_db_file), "|", :wp, :db, :import, "-"
           execute :rm, fetch(:wpcli_remote_db_file)
           execute :wp, "search-replace", fetch(:wpcli_local_url), fetch(:wpcli_remote_url), fetch(:wpcli_args) || "--skip-columns=guid"

@@ -34,7 +34,8 @@ namespace :wpcli do
           within fetch(:dev_path) do
             execute :gunzip, "<", fetch(:wpcli_local_db_file), "|", :wp, :db, :import, "-"
             execute :rm, fetch(:wpcli_local_db_file)
-            execute :wp, "search-replace", fetch(:wpcli_remote_url), fetch(:wpcli_local_url), fetch(:wpcli_args) || "--skip-columns=guid"
+            execute :wp, "search-replace", fetch(:wpcli_remote_url), fetch(:wpcli_local_url),  || "--skip-columns=fetch(:wpcli_args)guid"
+            execute :wp, "plugin deactivate", fetch(:wpcli_plugins_to_deactivate)
           end
         end
       else
@@ -42,6 +43,7 @@ namespace :wpcli do
           execute :gunzip, "<", fetch(:wpcli_local_db_file), "|", :wp, :db, :import, "-"
           execute :rm, fetch(:wpcli_local_db_file)
           execute :wp, "search-replace", fetch(:wpcli_remote_url), fetch(:wpcli_local_url), fetch(:wpcli_args) || "--skip-columns=guid"
+          execute :wp, "plugin deactivate", fetch(:wpcli_plugins_to_deactivate)
         end
       end
     end
